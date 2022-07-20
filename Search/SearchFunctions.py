@@ -50,6 +50,34 @@ def filter_api(ingredient, dietary, cuisineType, app_id, key):
     return requests.get(url)  # return api response
 
 
+# Get ingredient after validation
+# If string is not letters or is null, display error message.
+# If letters, return true
+def is_letters(string):
+    if string == "Please enter an ingredient" or string is None:
+        warning_null()
+        return False
+
+    elif string.isalpha():
+        return True
+
+    else:
+        warning_alpha()
+        return False
+
+
+# check if ingredient is alpha
+# if true, commence search
+def get_ingredient(string, self, dietary):
+    if is_letters(string):
+        ingredient = string
+
+        cuisineType = self.combobox.get()  # get cuisine type from combobox
+        print("Cuisine Type " + cuisineType)
+        search(ingredient, dietary, cuisineType)  # start search
+        self.label.configure(text="Close window to continue")  # change label to give user instruction
+
+
 # Get recipe results then print
 def search(ingredient, dietary, cuisineType):
     try:
@@ -122,34 +150,6 @@ def radiobox_switch(num):
             return "Dairy-free"
         case _:
             return "Error " + num
-
-
-# Get ingredient after validation
-# If string is not letters or is null, display error message.
-# If letters, return true
-def is_letters(string):
-    if string == "Please enter an ingredient" or string is None:
-        warning_null()
-        return False
-
-    elif string.isalpha():
-        return True
-
-    else:
-        warning_alpha()
-        return False
-
-
-# check if ingredient is alpha
-# if true, commence search
-def get_ingredient(string, self, dietary):
-    if is_letters(string):
-        ingredient = string
-
-        cuisineType = self.combobox.get()  # get cuisine type from combobox
-        print("Cuisine Type " + cuisineType)
-        search(ingredient, dietary, cuisineType)  # start search
-        self.label.configure(text="Close window to continue")  # change label to give user instruction
 
 
 # Input validation warnings
